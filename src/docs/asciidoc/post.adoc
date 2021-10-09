@@ -1,0 +1,21 @@
+:basedir: {docdir}
+:snippets: {basedir}/build/generated-snippets
+=== 게시글 API
+
+==== GET
+===== Request
+Request 형식은 다음과 같다:
+include::{snippets}/create/http-request.adoc[]
+
+====== Try with curl
+include::{snippets}/create/curl-request.adoc[]
+
+===== Response
+성공할 경우 response 형식은 다음과 같다:
+include::{snippets}/create/http-response.adoc[]
+
+====== Response Fields
+include::{snippets}/create/response-fields.adoc[]
+
+====== Response Body
+include::{snippets}/create/response-body.adoc[]
