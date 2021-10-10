@@ -1,7 +1,7 @@
 :basedir: {docdir}
 :sources-root: {basedir}/src
 
-= Member API
+= 게시글 API
 :doctype: book
 :toc: left
 :sectnums:
