@@ -1,29 +1,28 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.gradle.tasks.KotlinTest
 
 plugins {
     id("org.asciidoctor.jvm.convert") version "3.3.2"
     id("org.springframework.boot") version "2.5.5"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version "1.5.31"
-    kotlin("plugin.spring") version "1.5.31" // allOpen plugin이 포함되어있다.
-    kotlin("plugin.jpa") version "1.5.31" // noArg plugins이 포함되어있다.
+    kotlin("plugin.spring") version "1.5.31"
+    kotlin("plugin.jpa") version "1.5.31"
 }
 
 group = "com.study"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
-
+java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 fun String.toFile() = file(this)
 
-val snippetsDir = "build/generated-snippets"
-val docsResourcesDir = "src/main/resources/static/docs"
-val asciidocDir = "build/docs/asciidoc"
+val snippetsDir = "build/generated-snippets" // spring-rest-docs snippets(adoc) output
+val docsResourcesDir = "src/main/resources/static/docs" // rest-docs html5 resource
+val asciidocDir = "build/docs/asciidoc" // asciidoc output dir (adoc to html5)
 
 object Versions {
-    const val KOTEST = "4.6.3"
-    const val KOTEST_SPRING = "4.4.3"
+    const val KOTEST = "4.6.3" // kotest version
+    const val KOTEST_SPRING = "1.0.1" // kotest-extensions-spring version
+    const val REST_DOCS_MOCKMVC = "2.0.5.RELEASE"
 }
 
 repositories {
@@ -40,18 +39,16 @@ dependencies {
     runtimeOnly("com.h2database:h2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude("junit", "junit")
+        exclude("org.junit.vintage", "junit-vintage-engine")
     }
 
     testImplementation("org.springframework.security:spring-security-test")
-    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc:${Versions.REST_DOCS_MOCKMVC}")
 
     testImplementation("io.kotest:kotest-assertions-core:${Versions.KOTEST}")
     testImplementation("io.kotest:kotest-runner-junit5:${Versions.KOTEST}")
-
-    testImplementation("io.kotest:kotest-extensions-spring:${Versions.KOTEST_SPRING}")
-
-
+    testImplementation("io.kotest.extensions:kotest-extensions-spring:${Versions.KOTEST_SPRING}")
 }
 
 allOpen {
@@ -63,7 +60,7 @@ allOpen {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
 }
 
